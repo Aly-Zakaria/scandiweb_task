@@ -1,0 +1,41 @@
+## Scandiweb Task
+
+
+
+**What it Does:**
+
+* Creates a simple product with configurable details like SKU, name, and price.
+* Sets the product to be enabled and visible in both catalog and search results.
+* Manages inventory by assigning a source code and initial quantity.
+* Assigns the product to multiple categories (requires replacing placeholder IDs with actual category IDs).
+
+**Requirements:**
+
+* Magento 2
+
+**Installation:**
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/Aly-Zakaria/scandiweb_task app/code/Scandiweb/ScandiwebTest
+```
+
+2. Run the following Magento CLI commands to deploy and apply the data patch:
+
+```bash
+npm run cli
+magento cache:flush
+magento setup:upgrade
+```
+
+** Code:**
+
+*  the `CreateSimpleProduct.php` file within the `\app\code\Scandiweb\ScandiwebTest\Setup\Patch\Data` directory to add new simple product.
+
+**Testing:**
+
+* After deploying the patch, navigate to **Products > Catalog** in your Magento admin panel.
+* Search for the product using its SKU to verify its creation.
+
+
