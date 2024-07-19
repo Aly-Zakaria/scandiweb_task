@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Magento2SupportSettings">
+    <option name="isEnabled" value="true" />
+    <option name="installationPath" value="$PROJECT_DIR$" />
+    <option name="edition" value="Magento Open Source" />
+    <option name="version" value="2.4.7-p1" />
+  </component>
+</project>

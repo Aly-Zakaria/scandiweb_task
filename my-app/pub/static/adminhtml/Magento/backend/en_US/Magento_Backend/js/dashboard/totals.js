@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-backend/view/adminhtml/web/js/dashboard/totals.js

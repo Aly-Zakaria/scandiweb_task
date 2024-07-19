@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-admin-analytics/view/adminhtml/web/js/modal/component.js

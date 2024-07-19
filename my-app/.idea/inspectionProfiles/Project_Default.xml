@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default"/>
+    <inspection_tool class="PhpStanGlobal" enabled="true" level="ERROR" enabled_by_default="true"/>
+    <inspection_tool class="PhpCSValidationInspection" enabled="true" enabled_by_default="true" level="ERROR">
+      <option name="CODING_STANDARD" value="Magento2"/>
+      <option name="WARNING_HIGHLIGHT_LEVEL_NAME" value="ERROR"/>
+      <option name="SHOW_SNIFF_NAMES" value="true"/>
+      <option name="EXTENSIONS" value="php"/>
+    </inspection_tool>
+    <inspection_tool class="Stylelint" enabled="true" level="ERROR" enabled_by_default="true"/>
+    <inspection_tool class="MessDetectorValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CODESIZE" value="true"/>
+      <option name="CONTROVERSIAL" value="true"/>
+      <option name="DESIGN" value="true"/>
+      <option name="UNUSEDCODE" value="true"/>
+      <option name="NAMING" value="true"/>
+      <option name="customRulesets">
+        <list>
+          <RulesetDescriptor>
+            <option name="name" value="Magento PHPMD rule set"/>
+            <option name="path" value="$PROJECT_DIR$/dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml"/>
+          </RulesetDescriptor>
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="Eslint" enabled="true" level="ERROR" enabled_by_default="true"/>
+    <inspection_tool class="PhpCSFixerValidationInspection" enabled="true" enabled_by_default="true" level="ERROR">
+      <option name="CODING_STANDARD" value="Custom"/>
+      <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/.php-cs-fixer.dist.php"/>
+    </inspection_tool>
+  </profile>
+</component>
