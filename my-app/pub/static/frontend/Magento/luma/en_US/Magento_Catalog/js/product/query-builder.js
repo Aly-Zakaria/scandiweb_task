@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-catalog/view/frontend/web/js/product/query-builder.js

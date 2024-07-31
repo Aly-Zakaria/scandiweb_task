@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-captcha/view/frontend/web/js/view/checkout/defaultCaptcha.js

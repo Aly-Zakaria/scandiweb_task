@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/lib/web/jquery/ui-modules/vendor/jquery-color/jquery.color.js

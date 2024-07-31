@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-persistent/view/frontend/web/js/view/customer-data-mixin.js

@@ -1,0 +1,1 @@
+/home/ali/scandiweb/scandiweb_task/my-app/vendor/magento/module-page-cache/view/frontend/web/js/page-cache.js
