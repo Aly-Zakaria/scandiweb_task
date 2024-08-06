@@ -1,7 +1,5 @@
 <?php
-
 namespace Scandiweb\ScandiwebTest\Setup\Patch\Data;
-
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\LocalizedException;
@@ -17,7 +15,7 @@ use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Framework\App\State;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Validation\ValidationException;
 use Magento\Setup\Exception;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
@@ -27,31 +25,48 @@ use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory as CategoryCo
 
 class CreateSimpleProduct implements DataPatchInterface
 {
-
-    protected ModuleDataSetupInterface $setup;
-
+    /**
+     * @var ProductInterfaceFactory
+     */
     protected ProductInterfaceFactory $productInterfaceFactory;
-
+    /**
+     * @var ProductRepositoryInterface
+     */
     protected ProductRepositoryInterface $productRepository;
-
+    /**
+     * @var State
+     */
     protected State $appState;
-
+    /**
+     * @var EavSetup
+     */
     protected EavSetup $eavSetup;
-
+    /**
+     * @var StoreManagerInterface
+     */
     protected StoreManagerInterface $storeManager;
-
+    /**
+     * @var SourceItemInterfaceFactory
+     */
     protected SourceItemInterfaceFactory $sourceItemFactory;
-
+    /**
+     * @var SourceItemsSaveInterface
+     */
     protected SourceItemsSaveInterface $sourceItemsSaveInterface;
-
+    /**
+     * @var CategoryLinkManagementInterface
+     */
     protected CategoryLinkManagementInterface $categoryLink;
-
+    /**
+     * @var CategoryCollectionFactory
+     */
     protected CategoryCollectionFactory $categoryCollectionFactory;
-
+    /**
+     * @var array
+     */
     protected array $sourceItems = [];
 
     public function __construct(
-        ModuleDataSetupInterface $setup,
         ProductInterfaceFactory $productInterfaceFactory,
         ProductRepositoryInterface $productRepository,
         State $appState,
@@ -65,31 +80,39 @@ class CreateSimpleProduct implements DataPatchInterface
         $this->appState = $appState;
         $this->productInterfaceFactory = $productInterfaceFactory;
         $this->productRepository = $productRepository;
-        $this->setup = $setup;
         $this->eavSetup = $eavSetup;
         $this->storeManager = $storeManager;
         $this->sourceItemFactory = $sourceItemFactory;
         $this->sourceItemsSaveInterface = $sourceItemsSaveInterface;
         $this->categoryLink = $categoryLink;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-
     }
-
-
-    public function apply(){
+    /**
+     * @throws \Exception
+     */
+    public function apply(): void
+    {
         $this->appState->emulateAreaCode('adminhtml', [$this, 'execute']);
 
     }
 
-    public function execute(){
-
+    /**
+     * @return void
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     * @throws StateException
+     * @throws ValidationException
+     */
+    public function execute(): void
+    {
         $product = $this->productInterfaceFactory->create();
         try{
             // check if the product already exists
             if ($product->getIdBySku('New_SKU')) {
                 return;
             }
-
             $attributeSetId = $this->eavSetup->getAttributeSetId(Product::ENTITY, 'Default');
             // get the website id from a StoreManagerInterface instance
             $websiteIDs = [$this->storeManager->getStore()->getWebsiteId()];
@@ -103,13 +126,9 @@ class CreateSimpleProduct implements DataPatchInterface
                 ->setPrice(300)
                 ->setVisibility(Visibility::VISIBILITY_BOTH)
                 ->setStatus(Status::STATUS_ENABLED);
-
             $product->setStockData(['use_config_manage_stock' => 1, 'is_qty_decimal' => 0, 'is_in_stock' => 1]);
-
-
             // save the product to the repository
             $product = $this->productRepository->save($product);
-
             // set source item...
             $sourceItem = $this->sourceItemFactory->create();
             $sourceItem->setSourceCode('default');
@@ -120,44 +139,33 @@ class CreateSimpleProduct implements DataPatchInterface
             // set the stock status
             $sourceItem->setStatus(SourceItemInterface::STATUS_IN_STOCK);
             $this->sourceItems[] = $sourceItem;
-
             // save the source item
             $this->sourceItemsSaveInterface->execute($this->sourceItems);
-
-            // Assign product to categories (replace with your category IDs)
+            // Assign product to categorize (replace with your category IDs)
             $categoryTitles = ['Men', 'Women'];
             $categoryIds = $this->categoryCollectionFactory->create()
                 ->addAttributeToFilter('name', ['in' => $categoryTitles])
                 ->getAllIds();
-
             $this->categoryLink->assignProductToCategories($product->getSku(), $categoryIds);
-
-
         }
         catch ( Exception $error){
             echo $error;
         }
-
     }
-
     /**
      * @inheritDoc
      */
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         // TODO: Implement getDependencies() method.
         return [];
     }
-
     /**
      * @inheritDoc
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         // TODO: Implement getAliases() method.
         return [];
     }
-
-
-
 }
